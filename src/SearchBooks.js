@@ -13,7 +13,6 @@ class SearchBooks extends Component {
 			this.setState({ isLoading: true })
 			BooksAPI.search(query).then(searchResults => {
 				this.setState({
-//					searchResults: searchResults.filter(this.onlyUnique),
 					searchResults: searchResults,
 					isLoading: false
 				})
@@ -22,10 +21,6 @@ class SearchBooks extends Component {
 		} else {
 			this.setState({searchResults: []})
 		}
-	}
-
-	onlyUnique(value, index, self) {
-	    return self.indexOf(value) === index;
 	}
 
 	render() {

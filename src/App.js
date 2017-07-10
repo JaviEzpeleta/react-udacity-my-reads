@@ -1,6 +1,8 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
+import Loading from './utils/Loading'
+import Shelves from './Shelves'
 
 class BooksApp extends React.Component {
   state = {
@@ -10,26 +12,44 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: false
+    showSearchPage: false,
+    isLoading: false,
+    books: []
   }
 
   searchBooks = (query) => {
-    BooksAPI.search(query, 10).then(books => {
-      console.log('....');
-      console.log(books);
-      console.log('-----');
-    })
-
-    console.log('this is ' + query)
-    console.log('found: ')
-   // console.log(booksFound)
-//    this.setState({ query: query.trim() })
+    if (query.length > 2) {
+      this.setState({ isLoading: true })
+      BooksAPI.search(query).then(books => {
+        this.setState({ isLoading: false })
+      })
+    }
   }
 
+  updateBooks() {
+    BooksAPI.getAll().then((books) => {
+      this.setState({books: books, isLoading: false})
+    })
+  }
+
+  componentDidMount() {
+    this.updateBooks()
+  }
+
+  changeSelectedBookshelf = (bookChanged) => {
+    this.setState({ isLoading: true })
+    BooksAPI.update(bookChanged.book, bookChanged.shelf).then(() => {
+      this.updateBooks()
+    })
+  }
 
   render() {
+
     return (
       <div className="app">
+
+        {this.state.isLoading && ( <Loading/> )}
+
         {this.state.showSearchPage ? (
           <div className="search-books">
             <div className="search-books-bar">
@@ -49,6 +69,10 @@ class BooksApp extends React.Component {
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
+
+            <Shelves books={this.state.books} changeSelectedBookshelf={this.changeSelectedBookshelf} />
+
+
             <div className="list-books-content">
               <div>
                 <div className="bookshelf">

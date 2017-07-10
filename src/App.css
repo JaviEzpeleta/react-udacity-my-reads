@@ -24,9 +24,19 @@ a {
     position: fixed;
     top: 50%;
     left: 50%;
-    margin-left: -50px;
-    margin-top: -50px;
+    margin-left: -75px;
+    margin-top: -75px;
     z-index: 100001;
+}
+
+.loadingGif {
+    background-image: url('./icons/loading.gif');
+    width: 150px;
+    height: 150px;
+    background-repeat: no-repeat;
+    border: 0px;
+    border-style: none;
+        border-bottom-color: none !important
 }
 
 /* main page */

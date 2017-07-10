@@ -3,7 +3,6 @@ import BookShelfChanger from './BookShelfChanger'
 
 class Book extends Component {
 	render() {
-
 		return (
 			<li>
 				<div className="book">
@@ -12,7 +11,8 @@ class Book extends Component {
 							<BookShelfChanger
 								book={this.props.book}
 								shelf={this.props.book.shelf}
-								changeSelectedBookshelf={this.props.changeSelectedBookshelf}/>
+								changeSelectedBookshelf={this.props.changeSelectedBookshelf}
+								allBooksByShelf={this.props.allBooksByShelf} />
 						</div>
 					<div className="book-title">{this.props.book.title}</div>
 					<div className="book-authors">{this.props.book.author}</div>

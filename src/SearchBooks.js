@@ -11,12 +11,14 @@ class SearchBooks extends Component {
 	searchBooks = (query) => {
 		if (query.length) {
 			this.setState({ isLoading: true })
-			BooksAPI.search(query).then(searchResults => {
+			BooksAPI.search(query).then(results => {
+				let searchResults = results.map(result => {
+					return this.props.books.has(result.id) ? this.props.books.get(result.id) : result;
+				})
 				this.setState({
 					searchResults: searchResults,
 					isLoading: false
 				})
-				console.log(searchResults)
 			})
 		} else {
 			this.setState({searchResults: []})

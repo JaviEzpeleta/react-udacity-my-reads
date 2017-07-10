@@ -12,18 +12,25 @@ class BooksApp extends React.Component {
   shelfNames = ['currentlyReading', 'wantToRead', 'read']
 
   state = {
-    booksByShelf: []
+    booksByShelf: [],
+    books: new Map()
   }
 
   updateBooks() {
     let booksByShelf = []
     this.showLoading()
-    BooksAPI.getAll().then((books) => {
+    BooksAPI.getAll().then((results) => {
+
+      let books = new Map();
+      results.forEach(book => books.set(book.id, book));
+
       this.setState({books: books, isLoading: false})
       booksByShelf = this.shelfNames.map( (shelf) =>
-        books.filter((book) => (book.shelf === shelf))
+        results.filter((book) => (book.shelf === shelf))
       )
-      this.setState({ booksByShelf: booksByShelf})
+      this.setState({
+        books: books,
+        booksByShelf: booksByShelf})
     })
   }
 
@@ -57,7 +64,8 @@ class BooksApp extends React.Component {
 
           <SearchBooks
             changeSelectedBookshelf={this.changeSelectedBookshelf}
-            allBooksByShelf={this.state.booksByShelf} />
+            allBooksByShelf={this.state.booksByShelf}
+            books={this.state.books} />
 
         )}/>
 

@@ -39,9 +39,13 @@ class SearchBooks extends Component {
 						return books.has(result.id) ? books.get(result.id) : result;
 					})
 				}
-				this.setState({
-					searchResults: searchResults,
-				})
+				if (query = this.state.query) {
+					// only if the return for this query is the last promise being executed,
+					// then we update the search results in the state
+					this.setState({
+						searchResults: searchResults,
+					})
+				}
 				this.hideLoading()
 			})
 		} else {
@@ -78,15 +82,12 @@ class SearchBooks extends Component {
 			        ) }
 
 					<ol className="books-grid">
-		              { (searchResults.length > 0) &&
-			              	searchResults.map( (book) => (
-			              		<Book key={book.id}
-			              			book={book}
-			              			changeSelectedBookshelf={changeSelectedBookshelf}
-			              			allBooksByShelf={allBooksByShelf} />
-				              )
-			              	)
-		              }
+						{ (searchResults.length > 0) && searchResults.map( (book) => (
+							<Book key={book.id}
+								book={book}
+								changeSelectedBookshelf={changeSelectedBookshelf}
+								allBooksByShelf={allBooksByShelf} />
+						))}
 					</ol>
 				</div>
 			</div>

@@ -2,6 +2,7 @@ import React from 'react'
 import BookShelfChanger from './BookShelfChanger'
 
 const Book = props => {
+
 	if(!props.book) return null;
 	const { authors, title, imageLinks, shelf } = props.book;
 	const { book, changeSelectedBookshelf, allBooksByShelf } = props;

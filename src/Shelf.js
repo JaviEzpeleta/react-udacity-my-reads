@@ -1,7 +1,14 @@
 import React, {Component} from 'react'
 import Book from './Book'
+import PropTypes from 'prop-types'
 
 class Shelf extends Component {
+
+	static propTypes = {
+		type: PropTypes.string.isRequired,
+		changeSelectedBookshelf: PropTypes.func.isRequired,
+		allBooksByShelf: PropTypes.array.isRequired
+	}
 
 	bookshelfTitle = this.props.type
 		.replace(/([A-Z])/g, ' $1')
@@ -9,21 +16,29 @@ class Shelf extends Component {
 
 	render() {
 
+		const { books, changeSelectedBookshelf, allBooksByShelf } = this.props;
+
 		return (
 			<div className="bookshelf">
-				{ (this.props.books.length > 0) && (
+				{ (books.length > 0) && (
 					<span>
-		              <h2 className="bookshelf-title">{this.bookshelfTitle}</h2>
+		              <h2 className="bookshelf-title">
+		              	{this.bookshelfTitle}
+		              	{ (books.length > 1) && (
+		              		<span> ({books.length} books) </span> ) }
+		              	{ (books.length === 1) && (
+		              		<span> ({books.length} book) </span> ) }
+
+		              </h2>
 		              <ol className="books-grid">
-			              { this.props.books &&
-				              	this.props.books.map( (book) => (
-					              	<Book
-					              		key={book.id}
-					              		book={book}
-					              		changeSelectedBookshelf={this.props.changeSelectedBookshelf}
-					              		allBooksByShelf={this.props.allBooksByShelf} />
-					              )
-				              	)
+			              { books && books.map( (book) => (
+				              	<Book
+				              		key={book.id}
+				              		book={book}
+				              		changeSelectedBookshelf={changeSelectedBookshelf}
+				              		allBooksByShelf={allBooksByShelf} />
+				              )
+			              	)
 			              }
 		              </ol>
 		            </span>

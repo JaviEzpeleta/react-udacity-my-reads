@@ -3,9 +3,15 @@ import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import Book from './Book'
 import Loading from './utils/Loading'
-
+import PropTypes from 'prop-types'
 
 class SearchBooks extends Component {
+
+	static propTypes = {
+		books: PropTypes.object.isRequired,
+		changeSelectedBookshelf: PropTypes.func.isRequired,
+		allBooksByShelf: PropTypes.array.isRequired
+	}
 
 	state = { searchResults: []}
 
@@ -24,8 +30,7 @@ class SearchBooks extends Component {
 		this.showLoading()
 		let searchResults = []
 		if (query.length) {
-
-			BooksAPI.search(query).then(results => {
+			BooksAPI.search(query, 20).then(results => {
 				if (results.length > 0) {
 					searchResults = results.map(result => {
 						return books.has(result.id) ? books.get(result.id) : result;

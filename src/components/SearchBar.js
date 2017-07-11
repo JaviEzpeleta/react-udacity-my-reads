@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import AnimatedWrapper from './../utils/AnimatedWrapper';
 
 const SearchBar = (props) => {
 	return (
@@ -15,4 +16,6 @@ const SearchBar = (props) => {
 
 }
 
-export default SearchBar
+const SearchBarComponent = AnimatedWrapper(SearchBar)
+
+export default SearchBarComponent

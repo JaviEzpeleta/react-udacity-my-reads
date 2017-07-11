@@ -39,7 +39,7 @@ class SearchBooks extends Component {
 						return books.has(result.id) ? books.get(result.id) : result;
 					})
 				}
-				if (query = this.state.query) {
+				if (query === this.state.query) {
 					// only if the return for this query is the last promise being executed,
 					// then we update the search results in the state
 					this.setState({

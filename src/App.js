@@ -6,6 +6,7 @@ import Shelves from './components/Shelves'
 import { Route } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import SearchBooks from './components/SearchBooks'
+import MainPageTitle from './components/MainPageTitle'
 
 class BooksApp extends React.Component {
 
@@ -72,9 +73,8 @@ class BooksApp extends React.Component {
         <Route exact path='/' render={() => (
 
           <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
-            </div>
+
+            <MainPageTitle />
 
             <Shelves
               changeSelectedBookshelf={this.changeSelectedBookshelf}

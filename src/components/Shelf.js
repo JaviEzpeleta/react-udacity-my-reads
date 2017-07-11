@@ -22,26 +22,24 @@ class Shelf extends Component {
 			<div className="bookshelf">
 				{ (books.length > 0) && (
 					<span>
-		              <h2 className="bookshelf-title">
-		              	{this.bookshelfTitle}
-		              	{ (books.length > 1) && (
-		              		<span> ({books.length} books) </span> ) }
-		              	{ (books.length === 1) && (
-		              		<span> ({books.length} book) </span> ) }
+						<h2 className="bookshelf-title">
+							{this.bookshelfTitle}
+							{ (books.length > 1) && (
+							<span> ({books.length} books) </span> ) }
+							{ (books.length === 1) && (
+							<span> ({books.length} book) </span> ) }
+						</h2>
 
-		              </h2>
-		              <ol className="books-grid">
-			              { books && books.map( (book) => (
-				              	<Book
-				              		key={book.id}
-				              		book={book}
-				              		changeSelectedBookshelf={changeSelectedBookshelf}
-				              		allBooksByShelf={allBooksByShelf} />
-				              )
-			              	)
-			              }
-		              </ol>
-		            </span>
+						<ol className="books-grid">
+							{ books && books.map( (book) => (
+								<Book
+									key={book.id}
+									book={book}
+									changeSelectedBookshelf={changeSelectedBookshelf}
+									allBooksByShelf={allBooksByShelf} />
+							)) }
+						</ol>
+					</span>
 				)}
 	        </div>
 		)

@@ -3,10 +3,11 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import Loading from './utils/Loading'
 import Shelves from './components/Shelves'
-import { Route } from 'react-router-dom'
+import { Route, Redirect, Switch } from 'react-router-dom'
 import SearchBooks from './components/SearchBooks'
 import MainPageTitle from './components/MainPageTitle'
 import AddBookButton from './components/AddBookButton'
+import NotFound from './components/NotFound'
 
 class BooksApp extends React.Component {
 
@@ -63,31 +64,39 @@ class BooksApp extends React.Component {
 
 				{this.state.isLoading && ( <Loading/> )}
 
-				<Route path='/search' render={() => (
+				<Switch>
 
-					<SearchBooks
-						changeSelectedBookshelf={this.changeSelectedBookshelf}
-						allBooksByShelf={this.state.booksByShelf}
-						books={this.state.books} />
+					<Route path='/search' render={() => (
 
-				)}/>
-
-				<Route exact path='/' render={() => (
-
-					<div className="list-books">
-
-						<MainPageTitle />
-
-						<Shelves
+						<SearchBooks
 							changeSelectedBookshelf={this.changeSelectedBookshelf}
-							booksByShelf={this.state.booksByShelf}
-							shelfNames={this.shelfNames} />
+							allBooksByShelf={this.state.booksByShelf}
+							books={this.state.books} />
 
-						<AddBookButton />
+					)}/>
 
-					</div>
+					<Route exact path='/' render={() => (
 
-				)}/>
+						<div className="list-books">
+
+							<MainPageTitle />
+
+							<Shelves
+								changeSelectedBookshelf={this.changeSelectedBookshelf}
+								booksByShelf={this.state.booksByShelf}
+								shelfNames={this.shelfNames} />
+
+							<AddBookButton />
+
+						</div>
+
+					)}/>
+
+					<Redirect from='*' to='/' />
+
+					<Route path="*" component={NotFound} />
+
+				</Switch>
 
 			</div>
 		)

@@ -4,93 +4,94 @@ import './App.css'
 import Loading from './utils/Loading'
 import Shelves from './components/Shelves'
 import { Route } from 'react-router-dom'
-import { Link } from 'react-router-dom'
 import SearchBooks from './components/SearchBooks'
 import MainPageTitle from './components/MainPageTitle'
+import AddBookButton from './components/AddBookButton'
 
 class BooksApp extends React.Component {
 
-  shelfNames = ['currentlyReading', 'wantToRead', 'read']
+	shelfNames = ['currentlyReading', 'wantToRead', 'read']
 
-  state = {
-    booksByShelf: [],
-    books: new Map()
-  }
+	state = {
+		booksByShelf: [],
+		books: new Map()
+	}
 
-  updateBooks() {
-    let booksByShelf = []
-    this.showLoading()
-    BooksAPI.getAll().then((results) => {
+	updateBooks() {
+		let booksByShelf = []
+		this.showLoading()
+		BooksAPI.getAll().then((results) => {
 
-      let books = new Map();
-      results.forEach(book => books.set(book.id, book));
+			let books = new Map();
+			results.forEach(book => books.set(book.id, book));
 
-      this.setState({books: books, isLoading: false})
-      booksByShelf = this.shelfNames.map( (shelf) =>
-        results.filter((book) => (book.shelf === shelf))
-      )
-      this.setState({
-        books: books,
-        booksByShelf: booksByShelf})
-    })
-  }
+			this.setState({books: books, isLoading: false})
+				booksByShelf = this.shelfNames.map( (shelf) =>
+				results.filter((book) => (book.shelf === shelf))
+			)
+			this.setState({
+				books: books,
+				booksByShelf: booksByShelf
+			})
 
-  componentDidMount() {
-    this.updateBooks()
-  }
+		})
+	}
 
-  showLoading() {
-    this.setState({ isLoading: true })
-  }
+	componentDidMount() {
+		this.updateBooks()
+	}
 
-  hideLoading() {
-    this.setState({ isLoading: false })
-  }
+	showLoading() {
+		this.setState({ isLoading: true })
+	}
 
-  changeSelectedBookshelf = (bookChanged) => {
-    this.showLoading()
-    BooksAPI.update(bookChanged.book, bookChanged.shelf).then(() => {
-      this.updateBooks()
-    })
-  }
+	hideLoading() {
+		this.setState({ isLoading: false })
+	}
 
-  render() {
+	changeSelectedBookshelf = (bookChanged) => {
+		this.showLoading()
+		BooksAPI.update(bookChanged.book, bookChanged.shelf).then(() => {
+			this.updateBooks()
+		})
+	}
 
-    return (
-      <div className="app">
+	render() {
 
-        {this.state.isLoading && ( <Loading/> )}
+		return (
+			<div className="app">
 
-        <Route path='/search' render={() => (
+				{this.state.isLoading && ( <Loading/> )}
 
-          <SearchBooks
-            changeSelectedBookshelf={this.changeSelectedBookshelf}
-            allBooksByShelf={this.state.booksByShelf}
-            books={this.state.books} />
+				<Route path='/search' render={() => (
 
-        )}/>
+					<SearchBooks
+						changeSelectedBookshelf={this.changeSelectedBookshelf}
+						allBooksByShelf={this.state.booksByShelf}
+						books={this.state.books} />
 
-        <Route exact path='/' render={() => (
+				)}/>
 
-          <div className="list-books">
+				<Route exact path='/' render={() => (
 
-            <MainPageTitle />
+					<div className="list-books">
 
-            <Shelves
-              changeSelectedBookshelf={this.changeSelectedBookshelf}
-              booksByShelf={this.state.booksByShelf}
-              shelfNames={this.shelfNames} />
+						<MainPageTitle />
 
-            <div className="open-search">
-              <Link to='/search'>Add a book</Link>
-            </div>
-          </div>
+						<Shelves
+							changeSelectedBookshelf={this.changeSelectedBookshelf}
+							booksByShelf={this.state.booksByShelf}
+							shelfNames={this.shelfNames} />
 
-        )}/>
+						<AddBookButton />
 
-      </div>
-    )
-  }
+					</div>
+
+				)}/>
+
+			</div>
+		)
+	}
 }
 
 export default BooksApp

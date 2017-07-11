@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import { Link } from 'react-router-dom'
 import * as BooksAPI from './../BooksAPI'
 import Book from './Book'
 import Loading from './../utils/Loading'
 import PropTypes from 'prop-types'
+import SearchBar from './SearchBar'
 
 class SearchBooks extends Component {
 
@@ -13,7 +13,10 @@ class SearchBooks extends Component {
 		allBooksByShelf: PropTypes.array.isRequired
 	}
 
-	state = { searchResults: []}
+	state = {
+		searchResults: [],
+		query: ''
+	}
 
 	showLoading() {
 		this.setState({ isLoading: true })
@@ -24,10 +27,10 @@ class SearchBooks extends Component {
 	}
 
 	searchBooks = (query) => {
-
+		query = query.trim();
 		const { books } = this.props;
-
 		this.showLoading()
+		this.setState({query: query})
 		let searchResults = []
 		if (query.length) {
 			BooksAPI.search(query, 20).then(results => {
@@ -43,32 +46,41 @@ class SearchBooks extends Component {
 			})
 		} else {
 			this.setState({searchResults: []})
+			this.hideLoading()
 		}
 	}
 
 	render() {
 
 		const { changeSelectedBookshelf, allBooksByShelf } = this.props;
+		const { isLoading, searchResults, query } = this.state;
 
 		return (
 
 			<div className="search-books">
 
-	        {this.state.isLoading && ( <Loading/> )}
+	        {isLoading && ( <Loading/> )}
 
-				<div className="search-books-bar">
-					<Link className="close-search" to="/">Close</Link>
-					<div className="search-books-input-wrapper">
-						<input type="text" placeholder="Search by title or author"
-							onChange={(event) => this.searchBooks(event.target.value)}
-						/>
-					</div>
-				</div>
+	        	<SearchBar searchBooks={this.searchBooks} />
+
 				<div className="search-books-results">
+
+					{ (searchResults.length > 0) && (
+						<h2 className="bookshelf-title">
+							{searchResults.length} Search Results for "{query}"
+						</h2>
+			        ) }
+
+					{ ((searchResults.length === 0) && (query.length > 0) ) && (
+						<h2 className="bookshelf-title">
+							Sorry, there are no results for "{query}"
+						</h2>
+			        ) }
+
 					<ol className="books-grid">
-		              { (this.state.searchResults.length > 0) &&
-			              	this.state.searchResults.map( (book) => (
-			              		<Book id={book.id}
+		              { (searchResults.length > 0) &&
+			              	searchResults.map( (book) => (
+			              		<Book key={book.id}
 			              			book={book}
 			              			changeSelectedBookshelf={changeSelectedBookshelf}
 			              			allBooksByShelf={allBooksByShelf} />

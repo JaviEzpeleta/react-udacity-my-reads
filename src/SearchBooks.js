@@ -17,8 +17,10 @@ class SearchBooks extends Component {
 		this.setState({ isLoading: false })
 	}
 
-
 	searchBooks = (query) => {
+
+		const { books } = this.props;
+
 		this.showLoading()
 		let searchResults = []
 		if (query.length) {
@@ -26,7 +28,7 @@ class SearchBooks extends Component {
 			BooksAPI.search(query).then(results => {
 				if (results.length > 0) {
 					searchResults = results.map(result => {
-						return this.props.books.has(result.id) ? this.props.books.get(result.id) : result;
+						return books.has(result.id) ? books.get(result.id) : result;
 					})
 				}
 				this.setState({
@@ -40,6 +42,9 @@ class SearchBooks extends Component {
 	}
 
 	render() {
+
+		const { changeSelectedBookshelf, allBooksByShelf } = this.props;
+
 		return (
 
 			<div className="search-books">
@@ -57,11 +62,11 @@ class SearchBooks extends Component {
 				<div className="search-books-results">
 					<ol className="books-grid">
 		              { (this.state.searchResults.length > 0) &&
-			              	this.state.searchResults.map( (book, index) => (
-			              		<Book id={book.id+book.index}
+			              	this.state.searchResults.map( (book) => (
+			              		<Book id={book.id}
 			              			book={book}
-			              			changeSelectedBookshelf={this.props.changeSelectedBookshelf}
-			              			allBooksByShelf={this.props.allBooksByShelf} />
+			              			changeSelectedBookshelf={changeSelectedBookshelf}
+			              			allBooksByShelf={allBooksByShelf} />
 				              )
 			              	)
 		              }

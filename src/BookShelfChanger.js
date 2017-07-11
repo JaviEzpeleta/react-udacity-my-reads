@@ -1,34 +1,34 @@
-import React, {Component} from 'react'
-// import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class BookShelfChanger extends Component {
 
-	/*
 	static propTypes = {
-		value: PropTypes.string.isRequired,
-		changeSelectedBookshelf: PropTypes.func.isRequired
-	}
-	*/
-
-	constructor(props) {
-		super(props)
-		this.state = {value: this.props.shelf}
+		shelf: PropTypes.string.isRequired,
+		changeSelectedBookshelf: PropTypes.func.isRequired,
+	    book: PropTypes.object.isRequired,
+	    allBooksByShelf: PropTypes.array.isRequired
 	}
 
-	render() {
+	render () {
+
+		const { shelf, changeSelectedBookshelf, allBooksByShelf, book } = this.props
+		const state = {value: shelf}
+
 		return (
-            <div className="book-shelf-changer">
-              <select value={this.state.value}
-				onChange={ (event) => { this.props.changeSelectedBookshelf({book: this.props.book, shelf: event.target.value})} }>>
-                <option value="none" disabled>Move to...</option>
-                <option value="currentlyReading">Currently Reading({this.props.allBooksByShelf[0].length})</option>
-                <option value="wantToRead">Want to Read({this.props.allBooksByShelf[1].length})</option>
-                <option value="read">Read({this.props.allBooksByShelf[2].length})</option>
-                <option value="none">None</option>
-              </select>
-            </div>
+	        <div className="book-shelf-changer">
+	          <select value={state.value}
+				onChange={ (event) => { changeSelectedBookshelf({book: book, shelf: event.target.value})} }>>
+	            <option value="none" disabled>Move to...</option>
+	            <option value="currentlyReading">Currently Reading ({allBooksByShelf[0].length})</option>
+	            <option value="wantToRead">Want to Read ({allBooksByShelf[1].length})</option>
+	            <option value="read">Read ({allBooksByShelf[2].length})</option>
+	            <option value="none">None</option>
+	          </select>
+	        </div>
 		)
 	}
+
 }
 
 export default BookShelfChanger

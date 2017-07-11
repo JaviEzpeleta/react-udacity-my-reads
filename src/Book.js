@@ -1,25 +1,30 @@
-import React, {Component} from 'react'
+import React from 'react'
 import BookShelfChanger from './BookShelfChanger'
 
-class Book extends Component {
-	render() {
-		return (
-			<li>
-				<div className="book">
-					<div className="book-top">
-						<div className="book-cover" style={{backgroundImage: 'url(' + this.props.book.imageLinks.thumbnail + ')' }}></div>
-							<BookShelfChanger
-								book={this.props.book}
-								shelf={this.props.book.shelf}
-								changeSelectedBookshelf={this.props.changeSelectedBookshelf}
-								allBooksByShelf={this.props.allBooksByShelf} />
-						</div>
-					<div className="book-title">{this.props.book.title}</div>
-					<div className="book-authors">{this.props.book.author}</div>
-				</div>
-			</li>
-		)
-	}
+const Book = props => {
+	if(!props.book) return null;
+	const { authors, title, imageLinks, shelf } = props.book;
+	const { book, changeSelectedBookshelf, allBooksByShelf } = props;
+
+	let image = imageLinks ? imageLinks.thumbnail : 'https://books.google.com/googlebooks/images/no_cover_thumb.gif';
+
+	return (
+		<li>
+			<div className="book">
+				<div className="book-top">
+					<div className="book-cover"
+						style={{backgroundImage: 'url('+image+')' }}></div>
+						<BookShelfChanger
+							book={book}
+							shelf={shelf}
+							changeSelectedBookshelf={changeSelectedBookshelf}
+							allBooksByShelf={allBooksByShelf} />
+					</div>
+				<div className="book-title">{title}</div>
+				<div className="book-authors">{authors}</div>
+			</div>
+		</li>
+	)
 }
 
 export default Book

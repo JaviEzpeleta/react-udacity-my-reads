@@ -22,6 +22,9 @@ class Book extends Component {
 
 		let image = imageLinks ? imageLinks.thumbnail : 'https://books.google.com/googlebooks/images/no_cover_thumb.gif';
 
+		//fixing the book's thumbnail image URLs so it's all "htpps" and won't trigger the working when visiting the demo page on a HTTPS Firebase Hosting Service
+		image.replace("http://", "https://");
+
 		return (
 			<li>
 				<div className="book">

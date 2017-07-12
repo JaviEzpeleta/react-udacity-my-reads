@@ -12,7 +12,6 @@ class Book extends Component {
 		};
 	}
 
-
 	render() {
 
 		if(!this.props.book) return null;

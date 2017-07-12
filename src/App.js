@@ -92,9 +92,11 @@ class BooksApp extends React.Component {
 
 					)}/>
 
-					<Redirect from='*' to='/' />
 
 					<Route path="*" component={NotFound} />
+
+					// unused, but it's another option: any other URL may redirect to the home screen and that's OK
+					<Redirect from='*' to='/' />
 
 				</Switch>
 

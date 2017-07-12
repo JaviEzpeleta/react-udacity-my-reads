@@ -38,7 +38,14 @@ class Book extends Component {
 								allBooksByShelf={allBooksByShelf} />
 						</div>
 					<div className="book-title">{title}</div>
-					<div className="book-authors">{authors}</div>
+					<div className="book-authors">
+						{ authors.map( (author, index) => (
+								<div key={index}>
+									{author}
+								</div>
+							)
+						) }
+					</div>
 				</div>
 			</li>
 		)

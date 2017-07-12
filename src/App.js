@@ -42,14 +42,6 @@ class BooksApp extends React.Component {
 		this.updateBooks()
 	}
 
-	showLoading() {
-		this.setState({ isLoading: true })
-	}
-
-	hideLoading() {
-		this.setState({ isLoading: false })
-	}
-
 	changeSelectedBookshelf = (bookChanged) => {
 		this.showLoading()
 		BooksAPI.update(bookChanged.book, bookChanged.shelf).then(() => {
@@ -102,7 +94,17 @@ class BooksApp extends React.Component {
 
 			</div>
 		)
+
 	}
+
+	showLoading() {
+		this.setState({ isLoading: true })
+	}
+
+	hideLoading() {
+		this.setState({ isLoading: false })
+	}
+
 }
 
 export default BooksApp

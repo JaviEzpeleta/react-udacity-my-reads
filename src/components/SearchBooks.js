@@ -18,14 +18,6 @@ class SearchBooks extends Component {
 		query: ''
 	}
 
-	showLoading() {
-		this.setState({ isLoading: true })
-	}
-
-	hideLoading() {
-		this.setState({ isLoading: false })
-	}
-
 	searchBooks = (query) => {
 		query = query.trim();
 		const { books } = this.props;
@@ -93,6 +85,15 @@ class SearchBooks extends Component {
 			</div>
 		)
 	}
+
+	showLoading() {
+		this.setState({ isLoading: true })
+	}
+
+	hideLoading() {
+		this.setState({ isLoading: false })
+	}
+
 }
 
 export default SearchBooks

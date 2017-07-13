@@ -61,13 +61,19 @@ class SearchBooks extends Component {
 
 				<div className="search-books-results">
 
-					{ (searchResults.length > 0) && (
+					{ (searchResults.length > 0) && !isLoading && (
 						<h2 className="bookshelf-title">
 							{searchResults.length} Search Results for "{query}"
 						</h2>
 			        ) }
 
-					{ ((searchResults.length === 0) && (query.length > 0) ) && (
+					{ isLoading && (
+						<h2 className="bookshelf-title">
+							Searching...
+						</h2>
+			        ) }
+
+					{ ((searchResults.length === 0) && (query.length > 0) && !isLoading ) && (
 						<h2 className="bookshelf-title">
 							Sorry, there are no results for "{query}"
 						</h2>

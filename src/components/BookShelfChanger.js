@@ -7,12 +7,12 @@ class BookShelfChanger extends Component {
 		shelf: PropTypes.string.isRequired,
 		changeSelectedBookshelf: PropTypes.func.isRequired,
 	    book: PropTypes.object.isRequired,
-	    allBooksByShelf: PropTypes.array.isRequired
+	    books: PropTypes.array.isRequired
 	}
 
 	render () {
 
-		const { shelf, changeSelectedBookshelf, allBooksByShelf, book } = this.props
+		const { shelf, changeSelectedBookshelf, books, book } = this.props
 		const state = {value: shelf}
 
 		return (
@@ -23,13 +23,13 @@ class BookShelfChanger extends Component {
 						Move to...
 					</option>
 					<option value="currentlyReading">
-						Currently Reading ({allBooksByShelf[0].length})
+						Currently Reading ({books.filter( (book) => (book.shelf === "currentlyReading")).length})
 					</option>
 					<option value="wantToRead">
-						Want to Read ({allBooksByShelf[1].length})
+						Want to Read ({books.filter( (book) => (book.shelf === "wantToRead")).length})
 					</option>
 					<option value="read">
-						Read ({allBooksByShelf[2].length})
+						Read ({books.filter( (book) => (book.shelf === "read")).length})
 					</option>
 					<option value="none">
 						None

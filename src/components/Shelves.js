@@ -6,24 +6,25 @@ class Shelves extends Component {
 
 	static propTypes = {
 		shelfNames: PropTypes.array.isRequired,
-		booksByShelf: PropTypes.array.isRequired,
+		books: PropTypes.array.isRequired,
 		changeSelectedBookshelf: PropTypes.func.isRequired
 	}
 
 	render() {
 
-		const { shelfNames, booksByShelf, changeSelectedBookshelf } = this.props
+		const { shelfNames, books, changeSelectedBookshelf } = this.props
+
 		return (
 			<div className="list-books-content">
-				{ (booksByShelf.length > 0) && (
-					booksByShelf.map( (shelf, index) => (
+				{ (books) && (
+					shelfNames.map( (shelf, index) => (
 						<Shelf
 							key={index}
-							type={shelfNames[index]}
-							books={booksByShelf[index]}
+							type={shelf}
 							changeSelectedBookshelf={changeSelectedBookshelf}
-							allBooksByShelf={booksByShelf} />
-					) )
+							books={books} />
+						)
+					)
 				)}
 			</div>
 		)

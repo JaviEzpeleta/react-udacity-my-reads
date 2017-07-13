@@ -8,9 +8,8 @@ import SearchBar from './SearchBar'
 class SearchBooks extends Component {
 
 	static propTypes = {
-		books: PropTypes.object.isRequired,
+		books: PropTypes.array.isRequired,
 		changeSelectedBookshelf: PropTypes.func.isRequired,
-		allBooksByShelf: PropTypes.array.isRequired
 	}
 
 	state = {
@@ -24,11 +23,12 @@ class SearchBooks extends Component {
 		this.showLoading()
 		this.setState({query: query})
 		let searchResults = []
+		let myBookIds = books.map( (book) => (book.id) );
 		if (query.length) {
 			BooksAPI.search(query, 20).then(results => {
 				if (results.length > 0) {
 					searchResults = results.map(result => {
-						return books.has(result.id) ? books.get(result.id) : result;
+						return myBookIds.includes(result.id) ? books.find((book) => (book.id === result.id)) : result;
 					})
 				}
 				if (query === this.state.query) {
@@ -48,7 +48,7 @@ class SearchBooks extends Component {
 
 	render() {
 
-		const { changeSelectedBookshelf, allBooksByShelf } = this.props;
+		const { changeSelectedBookshelf, books } = this.props;
 		const { isLoading, searchResults, query } = this.state;
 
 		return (
@@ -84,7 +84,7 @@ class SearchBooks extends Component {
 							<Book key={book.id}
 								book={book}
 								changeSelectedBookshelf={changeSelectedBookshelf}
-								allBooksByShelf={allBooksByShelf} />
+								books={books} />
 						))}
 					</ol>
 				</div>

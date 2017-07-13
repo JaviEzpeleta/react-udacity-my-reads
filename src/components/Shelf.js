@@ -7,7 +7,7 @@ class Shelf extends Component {
 	static propTypes = {
 		type: PropTypes.string.isRequired,
 		changeSelectedBookshelf: PropTypes.func.isRequired,
-		allBooksByShelf: PropTypes.array.isRequired
+		books: PropTypes.array.isRequired
 	}
 
 	bookshelfTitle = this.props.type
@@ -16,7 +16,9 @@ class Shelf extends Component {
 
 	render() {
 
-		const { books, changeSelectedBookshelf, allBooksByShelf } = this.props;
+		const { books, changeSelectedBookshelf, type } = this.props;
+
+		let numberOfBooks = books.filter( (book) => (book.shelf === type)).length;
 
 		return (
 			<div className="bookshelf">
@@ -24,19 +26,20 @@ class Shelf extends Component {
 					<span>
 						<h2 className="bookshelf-title">
 							{this.bookshelfTitle}
-							{ (books.length > 1) && (
-							<span> ({books.length} books) </span> ) }
-							{ (books.length === 1) && (
-							<span> ({books.length} book) </span> ) }
+							{ (numberOfBooks > 1) && (
+							<span> ({numberOfBooks} books) </span> ) }
+							{ (numberOfBooks === 1) && (
+							<span> ({numberOfBooks} book) </span> ) }
 						</h2>
 
 						<ol className="books-grid">
-							{ books && books.map( (book) => (
+
+							{ books && books.filter((book) => (book.shelf === type)).map( (book) => (
 								<Book
 									key={book.id}
 									book={book}
 									changeSelectedBookshelf={changeSelectedBookshelf}
-									allBooksByShelf={allBooksByShelf} />
+									books={books} />
 							)) }
 						</ol>
 					</span>

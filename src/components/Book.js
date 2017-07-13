@@ -17,7 +17,7 @@ class Book extends Component {
 		if(!this.props.book) return null;
 
 		const { authors, title, imageLinks, shelf } = this.props.book;
-		const { book, changeSelectedBookshelf, allBooksByShelf } = this.props;
+		const { book, changeSelectedBookshelf, books } = this.props;
 
 		let image = imageLinks ? imageLinks.thumbnail : 'https://books.google.com/googlebooks/images/no_cover_thumb.gif';
 
@@ -34,7 +34,7 @@ class Book extends Component {
 								book={book}
 								shelf={shelf}
 								changeSelectedBookshelf={changeSelectedBookshelf}
-								allBooksByShelf={allBooksByShelf} />
+								books={books} />
 						</div>
 					<div className="book-title">{title}</div>
 					<div className="book-authors">

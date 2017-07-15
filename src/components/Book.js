@@ -28,14 +28,13 @@ class Book extends Component {
 			<li>
 				<div className="book">
 					<div className="book-top">
-						<div className="book-cover"
-							style={{backgroundImage: 'url('+image+')' }}></div>
-							<BookShelfChanger
-								book={book}
-								shelf={shelf}
-								changeSelectedBookshelf={changeSelectedBookshelf}
-								books={books} />
-						</div>
+						<div className="book-cover" style={{backgroundImage: 'url('+image+')' }} />
+						<BookShelfChanger
+							book={book}
+							shelf={shelf}
+							changeSelectedBookshelf={changeSelectedBookshelf}
+							books={books} />
+					</div>
 					<div className="book-title">{title}</div>
 					<div className="book-authors">
 						{ authors && authors.map( (author, index) => (

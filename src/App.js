@@ -31,7 +31,14 @@ class BooksApp extends React.Component {
 	changeSelectedBookshelf = (bookChanged) => {
 		this.showLoading()
 		BooksAPI.update(bookChanged.book, bookChanged.shelf).then(() => {
-			this.updateBooks()
+			let books = this.state.books.map(bookStored => {
+				if (bookChanged.book.id === bookStored.id) {
+					bookStored.shelf = bookChanged.shelf
+				}
+				return bookStored
+			})
+			this.setState(books);
+			this.hideLoading()
 		})
 	}
 

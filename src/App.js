@@ -51,12 +51,19 @@ class BooksApp extends React.Component {
 
 				<Switch>
 
-					<Route path='/search' render={() => (
-
+					<Route exact path='/search' render={() => (
 						<SearchBooks
 							changeSelectedBookshelf={this.changeSelectedBookshelf}
 							shelfNames={this.shelfNames}
-							books={this.state.books} />
+							books={this.state.books}/>
+					)}/>
+
+					<Route path='/search/:query' render={({ match }) => (
+						<SearchBooks
+							changeSelectedBookshelf={this.changeSelectedBookshelf}
+							shelfNames={this.shelfNames}
+							books={this.state.books}
+							urlQuery={match.params.query}/>
 					)}/>
 
 					<Route exact path='/' render={() => (

@@ -18,6 +18,7 @@ class SearchBooks extends Component {
 	}
 
 	searchBooks = (query) => {
+		if (!query) return
 		query = query.trim();
 		const { books } = this.props;
 		this.showLoading()
@@ -46,9 +47,15 @@ class SearchBooks extends Component {
 		}
 	}
 
+	componentDidMount() {
+		if (this.props.urlQuery !== '') {
+			this.searchBooks(this.props.urlQuery)
+		}
+	}
+
 	render() {
 
-		const { changeSelectedBookshelf, books } = this.props;
+		const { changeSelectedBookshelf, books, urlQuery } = this.props;
 		const { isLoading, searchResults, query } = this.state;
 
 		return (
@@ -57,7 +64,7 @@ class SearchBooks extends Component {
 
 	        {isLoading && ( <Loading/> )}
 
-	        	<SearchBar searchBooks={this.searchBooks} />
+	        	<SearchBar searchBooks={this.searchBooks} urlQuery={urlQuery} />
 
 				<div className="search-books-results">
 

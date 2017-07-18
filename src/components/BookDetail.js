@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import * as BooksAPI from './../BooksAPI'
 import BookDetailBar from './BookDetailBar'
-//get = (bookId)
-
+import Loading from './../utils/Loading'
 
 class BookDetail extends Component {
 
 	componentDidMount() {
+		this.showLoading()
 		if (this.props.bookId !== '') {
 			this.getBook()
 		}
@@ -17,18 +17,21 @@ class BookDetail extends Component {
 	getBook() {
 		BooksAPI.get(this.props.bookId).then(book => {
 			this.setState({book})
+			this.hideLoading()
 		})
 	}
 
 	render() {
 
-		const { book } = this.state;
+		const { book, isLoading } = this.state;
 		const { imageLinks } = book;
 		let image = imageLinks ? imageLinks.thumbnail : 'https://books.google.com/googlebooks/images/no_cover_thumb.gif';
 
 
 		return (
 			<div>
+				{isLoading && ( <Loading/> )}
+
 				{(this.state.book) && (
 					<div>
 			        	<BookDetailBar title={this.state.book.title} />
@@ -40,6 +43,15 @@ class BookDetail extends Component {
 			</div>
 		)
 	}
+
+	showLoading() {
+		this.setState({ isLoading: true })
+	}
+
+	hideLoading() {
+		this.setState({ isLoading: false })
+	}
+
 }
 
 

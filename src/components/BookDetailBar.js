@@ -1,14 +1,17 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import AnimatedWrapper from './../utils/AnimatedWrapper';
 
 const BookDetailBar = (props) => {
 
-	console.log(props.history);
-
 	return (
 		<div className="book-detail-bar">
-			<div className="close-search" onClick={props.history.goBack}>Close</div>
+			{ (props.history.length > 2) && (
+				<div className="close-search" onClick={props.history.goBack}>Close</div>
+			) }
+			{ (props.history.length <= 2) && (
+				<Link className="close-search" to="/">Close</Link>
+			) }
 			<div className="search-books-input-wrapper">
 				<input type="text" disabled
 					placeholder={props.title}

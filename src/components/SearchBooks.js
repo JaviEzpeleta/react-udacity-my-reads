@@ -71,7 +71,7 @@ class SearchBooks extends Component {
 
 			<div className="search-books">
 
-	        {isLoading && ( <Loading/> )}
+	        	{isLoading && ( <Loading/> )}
 
 	        	<SearchBar searchBooks={this.searchBooks} urlQuery={urlQuery} updateLastQuery={updateLastQuery} />
 

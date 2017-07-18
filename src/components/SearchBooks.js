@@ -26,6 +26,7 @@ class SearchBooks extends Component {
 		let searchResults = []
 		let myBookIds = books.map( (book) => (book.id) );
 		if (query.length) {
+			BooksAPI.search = BooksAPI.search.bind(this);
 			BooksAPI.search(query, 20).then(results => {
 				if (results.length > 0) {
 					searchResults = results.map(result => {
@@ -38,24 +39,32 @@ class SearchBooks extends Component {
 					this.setState({
 						searchResults: searchResults,
 					})
+					this.props.updateLastQuery(this.state.query)
 				}
 				this.hideLoading()
 			})
 		} else {
 			this.setState({searchResults: []})
+			this.props.updateLastQuery(this.state.query)
 			this.hideLoading()
 		}
 	}
 
 	componentDidMount() {
-		if (this.props.urlQuery !== '') {
+		if (this.props.urlQuery) {
 			this.searchBooks(this.props.urlQuery)
+		} else {
+			if (this.props.resetSearch) {
+				this.props.updateLastQuery('')
+			} else {
+				this.searchBooks(this.props.lastQuery)
+			}
 		}
 	}
 
 	render() {
 
-		const { changeSelectedBookshelf, books, urlQuery } = this.props;
+		const { changeSelectedBookshelf, books, urlQuery, updateLastQuery } = this.props;
 		const { isLoading, searchResults, query } = this.state;
 
 		return (
@@ -64,7 +73,7 @@ class SearchBooks extends Component {
 
 	        {isLoading && ( <Loading/> )}
 
-	        	<SearchBar searchBooks={this.searchBooks} urlQuery={urlQuery} />
+	        	<SearchBar searchBooks={this.searchBooks} urlQuery={urlQuery} updateLastQuery={updateLastQuery} />
 
 				<div className="search-books-results">
 

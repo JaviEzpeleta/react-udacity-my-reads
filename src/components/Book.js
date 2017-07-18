@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import BookShelfChanger from './BookShelfChanger'
 import * as Animated from "animated/lib/targets/react-dom";
 import AnimatedWrapper from './../utils/AnimatedWrapper';
+import {Link} from 'react-router-dom'
 
 class Book extends Component {
 
@@ -28,7 +29,7 @@ class Book extends Component {
 			<li>
 				<div className="book">
 					<div className="book-top">
-						<div className="book-cover" style={{backgroundImage: 'url('+image+')' }} />
+						<Link to={`book/${book.id}`} className="book-cover" style={{backgroundImage: 'url('+image+')' }} />
 						<BookShelfChanger
 							book={book}
 							shelf={shelf}

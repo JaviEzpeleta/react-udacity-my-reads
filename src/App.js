@@ -8,13 +8,24 @@ import SearchBooks from './components/SearchBooks'
 import MainPageTitle from './components/MainPageTitle'
 import AddBookButton from './components/AddBookButton'
 import NotFound from './components/NotFound'
+import BookDetail from './components/BookDetail'
 
 class BooksApp extends React.Component {
 
 	shelfNames = ['currentlyReading', 'wantToRead', 'read']
 
 	state = {
-		books: []
+		books: [],
+		lastQuery: ''
+	}
+
+	constructor(props) {
+		super(props)
+		this.updateLastQuery = this.updateLastQuery.bind(this)
+	}
+
+	updateLastQuery = (lastQuery) => {
+		this.setState({lastQuery: lastQuery})
 	}
 
 	updateBooks() {
@@ -37,12 +48,14 @@ class BooksApp extends React.Component {
 				}
 				return bookStored
 			})
-			this.setState(books);
+			this.setState({books});
 			this.hideLoading()
 		})
 	}
 
 	render() {
+
+		const { updateLastQuery, changeSelectedBookshelf, shelfNames } = this
 
 		return (
 			<div className="app">
@@ -53,17 +66,25 @@ class BooksApp extends React.Component {
 
 					<Route exact path='/search' render={() => (
 						<SearchBooks
-							changeSelectedBookshelf={this.changeSelectedBookshelf}
-							shelfNames={this.shelfNames}
+							updateLastQuery={updateLastQuery.bind(this)}
+							changeSelectedBookshelf={changeSelectedBookshelf}
+							shelfNames={shelfNames}
+							lastQuery={this.state.lastQuery}
 							books={this.state.books}/>
 					)}/>
 
 					<Route path='/search/:query' render={({ match }) => (
 						<SearchBooks
-							changeSelectedBookshelf={this.changeSelectedBookshelf}
-							shelfNames={this.shelfNames}
+							updateLastQuery={updateLastQuery.bind(this)}
+							changeSelectedBookshelf={changeSelectedBookshelf}
+							shelfNames={shelfNames}
 							books={this.state.books}
+							lastQuery={this.state.lastQuery}
 							urlQuery={match.params.query}/>
+					)}/>
+
+					<Route exact path='/book/:bookId' render={({match}) => (
+						<BookDetail bookId={match.params.bookId}/>
 					)}/>
 
 					<Route exact path='/' render={() => (
@@ -77,17 +98,16 @@ class BooksApp extends React.Component {
 								shelfNames={this.shelfNames}
 								books={this.state.books} />
 
-							<AddBookButton />
+							<AddBookButton updateLastQuery={updateLastQuery.bind(this)} />
 
 						</div>
 
 					)}/>
 
-
 					<Route path="*" component={NotFound} />
 
 					// unused, but it's another option: any other URL may redirect to the home screen and that's OK
-					<Redirect from='*' to='/' />
+					<Redirect from='*' to='/'/>
 
 				</Switch>
 

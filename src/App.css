@@ -129,7 +129,7 @@ button {
 	right: 25px;
 	bottom: 25px;
 }
-.open-search a {
+.open-search div {
 	display: block;
 	width: 50px;
 	height: 50px;
@@ -143,8 +143,31 @@ button {
 	font-size: 0;
 }
 
-/* search page */
+/* book detail page */
 
+.book-detail-body {
+    padding: 90px 10px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.book-detail-bar {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 5;
+	display: flex;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 0 6px rgba(0,0,0,0.23);
+}
+.book-detail-bar input {
+	width: 100%;
+	padding: 15px 10px;
+	font-size: 1.25em;
+	border: none;
+	outline: none;
+}
+
+/* search page */
 .search-books-bar {
 	position: fixed;
 	width: 100%;

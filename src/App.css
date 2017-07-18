@@ -149,6 +149,7 @@ button {
     padding: 90px 10px;
     max-width: 900px;
     margin: 0 auto;
+    display: flex;
 }
 .book-detail-bar {
 	position: fixed;
@@ -166,7 +167,33 @@ button {
 	border: none;
 	outline: none;
 }
-
+.book-detail-cover {
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	background: #eee;
+	width: 128px;
+	height: 193px;
+	display: inline-block;
+	align-self: flex-start;
+}
+.book-detail-subbody {
+	display: inline-block;
+	align-self: flex-start;
+	padding: 2px 25px;
+	width: calc(100% - 122px);
+}
+.book-detail-title {
+	font-size: 2em;
+	margin-bottom: 14px;
+}
+.book-detail-authors {
+	font-size: 1.25em;
+}
+.book-detail-label {
+	text-transform: uppercase;
+	/* background: #ececec; */
+    padding: 8px 0px 0px;
+    font-size: 11px;
+}
 /* search page */
 .search-books-bar {
 	position: fixed;

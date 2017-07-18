@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class AddBookButton extends Component {
 
@@ -13,21 +13,11 @@ class AddBookButton extends Component {
 	}
 
 	render() {
-
-	    const { redirectToSearch } = this.state
-
-	    if (redirectToSearch) {
-	    	console.log('redirecting one time')
-	      return (
-	        <Redirect to='/search'/>
-	      )
-	    }
-
 		return (
 			<div className="open-search">
-				<div onClick={this.resetSearchAndGoToSearch}>
+				<Link to='/newSearch'>
 					Add a book
-				</div>
+				</Link>
 			</div>
 		)
 	}

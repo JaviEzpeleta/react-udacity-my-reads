@@ -9,6 +9,7 @@ import MainPageTitle from './components/MainPageTitle'
 import AddBookButton from './components/AddBookButton'
 import NotFound from './components/NotFound'
 import BookDetail from './components/BookDetail'
+import NewSearch from './components/NewSearch'
 
 class BooksApp extends React.Component {
 
@@ -98,11 +99,15 @@ class BooksApp extends React.Component {
 								shelfNames={this.shelfNames}
 								books={this.state.books} />
 
-							<AddBookButton updateLastQuery={updateLastQuery.bind(this)} />
+							<AddBookButton />
 
 						</div>
 
 					)}/>
+
+					<Route exact path='/newSearch' render={() => (
+						<NewSearch updateLastQuery={updateLastQuery.bind(this)} />
+					)} />
 
 					<Route path="*" component={NotFound} />
 

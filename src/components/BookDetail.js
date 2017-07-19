@@ -13,6 +13,13 @@ class BookDetail extends Component {
 		}
 	}
 
+	componentDidMount() {
+		this.showLoading()
+		if (this.props.bookId !== '') {
+			this.getBook()
+		}
+	}
+
 	state = { book: false, currentShelf: 'none' }
 
 	getBook() {

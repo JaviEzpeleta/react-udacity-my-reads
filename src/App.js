@@ -57,11 +57,12 @@ class BooksApp extends React.Component {
 	render() {
 
 		const { updateLastQuery, changeSelectedBookshelf, shelfNames } = this
+		const { books, lastQuery, isLoading } = this.state
 
 		return (
 			<div className="app">
 
-				{this.state.isLoading && ( <Loading/> )}
+				{isLoading && ( <Loading/> )}
 
 				<Switch>
 
@@ -70,8 +71,8 @@ class BooksApp extends React.Component {
 							updateLastQuery={updateLastQuery.bind(this)}
 							changeSelectedBookshelf={changeSelectedBookshelf}
 							shelfNames={shelfNames}
-							lastQuery={this.state.lastQuery}
-							books={this.state.books}/>
+							lastQuery={lastQuery}
+							books={books} />
 					)}/>
 
 					<Route path='/search/:query' render={({ match }) => (
@@ -79,13 +80,16 @@ class BooksApp extends React.Component {
 							updateLastQuery={updateLastQuery.bind(this)}
 							changeSelectedBookshelf={changeSelectedBookshelf}
 							shelfNames={shelfNames}
-							books={this.state.books}
-							lastQuery={this.state.lastQuery}
-							urlQuery={match.params.query}/>
+							books={books}
+							lastQuery={lastQuery}
+							urlQuery={match.params.query} />
 					)}/>
 
 					<Route exact path='/book/:bookId' render={({match}) => (
-						<BookDetail bookId={match.params.bookId}/>
+						<BookDetail bookId={match.params.bookId}
+							books={books}
+							shelfNames={shelfNames}
+							changeSelectedBookshelf={changeSelectedBookshelf} />
 					)}/>
 
 					<Route exact path='/' render={() => (
@@ -95,9 +99,9 @@ class BooksApp extends React.Component {
 							<MainPageTitle />
 
 							<Shelves
-								changeSelectedBookshelf={this.changeSelectedBookshelf}
-								shelfNames={this.shelfNames}
-								books={this.state.books} />
+								changeSelectedBookshelf={changeSelectedBookshelf}
+								shelfNames={shelfNames}
+								books={books} />
 
 							<AddBookButton />
 

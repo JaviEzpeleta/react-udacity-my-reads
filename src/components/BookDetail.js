@@ -6,38 +6,72 @@ import Moment from 'react-moment';
 
 class BookDetail extends Component {
 
-	componentDidMount() {
+	componentWillReceiveProps() {
 		this.showLoading()
 		if (this.props.bookId !== '') {
 			this.getBook()
 		}
 	}
 
-	state = { book: false }
+	state = { book: false, currentShelf: 'none' }
 
 	getBook() {
 		BooksAPI.get(this.props.bookId).then(book => {
 			this.setState({book})
 			this.hideLoading()
+
+			let myBookIds = this.props.books.map( (book) => (book.id) )
+
+			if (myBookIds.includes(book.id)) {
+				let currentShelf = this.props.books.find((bookItem) => (bookItem.id === book.id)).shelf
+				this.setState({currentShelf: currentShelf})
+			}
+
+
 		})
 	}
 
 	render() {
 
-		const { book, isLoading } = this.state;
-		const { imageLinks } = book;
-		let image = imageLinks ? imageLinks.thumbnail : 'https://books.google.com/googlebooks/images/no_cover_thumb.gif';
-		image = image.replace("http://", "https://");
+		const { book, isLoading, currentShelf } = this.state
+		const { imageLinks } = book
+		const { shelfNames, changeSelectedBookshelf } = this.props
+
+		let image = imageLinks ? imageLinks.thumbnail : 'https://books.google.com/googlebooks/images/no_cover_thumb.gif'
+		image = image.replace("http://", "https://")
+
+		let bookShelfTitles = shelfNames.map( (shelf) =>
+			{ return shelf.replace(/([A-Z])/g, ' $1')
+					.replace(/^./, function(str){ return str.toUpperCase(); })
+			}
+		)
 
 		return (
 			<div>
 				{isLoading && ( <Loading/> )}
 
-				{(this.state.book) && (
+				{(book) && (
 					<div>
-			        	<BookDetailBar title={this.state.book.title} />
+			        	<BookDetailBar title={book.title} />
 			        	<div className="book-detail-body">
-							<div className="book-detail-cover" style={{backgroundImage: 'url('+image+')' }} />
+							<div className="book-detail-left-area">
+								<div className="book-detail-cover" style={{backgroundImage: 'url('+image+')' }} />
+								<form>
+									{ shelfNames.map( (shelf, index) => (
+										<label key={index}>
+											<input type="radio" name="shelf" value={shelf}
+												onChange={ (event) => { changeSelectedBookshelf({book: book, shelf: event.target.value})} }
+												checked={currentShelf === shelf}
+											 /> {bookShelfTitles[index]}
+										</label>
+									) )}
+									<label>
+										<input type="radio" name="shelf" value="none"
+										onChange={ (event) => { changeSelectedBookshelf({book: book, shelf: event.target.value})} }
+										checked={currentShelf === 'none'} /> None
+									</label>
+								</form>
+							</div>
 				        	<div className="book-detail-subbody">
 								<div className="book-detail-label"> Title: </div>
 					        	<div className="book-detail-title">

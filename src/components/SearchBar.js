@@ -17,6 +17,6 @@ const SearchBar = (props) => {
 
 }
 
-const SearchBarComponent = AnimatedWrapper(SearchBar)
+const SearchBarComponent = AnimatedWrapper(SearchBar, '22')
 
 export default SearchBarComponent

@@ -22,8 +22,7 @@ const BookDetailBar = (props) => {
 
 }
 
-const BookDetailBarComponent = AnimatedWrapper(BookDetailBar)
-
+const BookDetailBarComponent = AnimatedWrapper(BookDetailBar, '5')
 
 
 export default withRouter(BookDetailBarComponent)

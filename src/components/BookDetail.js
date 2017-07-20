@@ -3,6 +3,7 @@ import * as BooksAPI from './../BooksAPI'
 import BookDetailBar from './BookDetailBar'
 import Loading from './../utils/Loading'
 import Moment from 'react-moment';
+import AnimatedBookCover from './AnimatedBookCover'
 
 class BookDetail extends Component {
 
@@ -62,7 +63,7 @@ class BookDetail extends Component {
 			        	<BookDetailBar title={book.title} />
 			        	<div className="book-detail-body">
 							<div className="book-detail-left-area">
-								<div className="book-detail-cover" style={{backgroundImage: 'url('+image+')' }} />
+								<AnimatedBookCover image={image} />
 								<form>
 									{ shelfNames.map( (shelf, index) => (
 										<label key={index}>
@@ -133,7 +134,6 @@ class BookDetail extends Component {
 	}
 
 }
-
 
 
 export default BookDetail

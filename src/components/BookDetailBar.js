@@ -14,7 +14,7 @@ const BookDetailBar = (props) => {
 			) }
 			<div className="search-books-input-wrapper">
 				<input type="text" disabled
-					placeholder={props.title}
+					placeholder={'📖 '+props.title}
 				/>
 			</div>
 		</div>

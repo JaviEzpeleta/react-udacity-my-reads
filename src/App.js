@@ -3,13 +3,11 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import Loading from './utils/Loading'
 import Shelves from './components/Shelves'
-import { Route, Redirect, Switch } from 'react-router-dom'
+import { Route, Redirect, Switch, Link } from 'react-router-dom'
 import SearchBooks from './components/SearchBooks'
 import MainPageTitle from './components/MainPageTitle'
-import AddBookButton from './components/AddBookButton'
 import NotFound from './components/NotFound'
 import BookDetail from './components/BookDetail'
-import NewSearch from './components/NewSearch'
 
 class BooksApp extends React.Component {
 
@@ -38,6 +36,10 @@ class BooksApp extends React.Component {
 
 	componentDidMount() {
 		this.updateBooks()
+	}
+
+	resetLastSearch() {
+		this.setState({lastQuery: ''})
 	}
 
 	changeSelectedBookshelf = (bookChanged) => {
@@ -103,15 +105,15 @@ class BooksApp extends React.Component {
 								shelfNames={shelfNames}
 								books={books} />
 
-							<AddBookButton />
+							<div className="open-search">
+								<Link to='/search' onClick={this.resetLastSearch}>
+									Add a book
+								</Link>
+							</div>
 
 						</div>
 
 					)}/>
-
-					<Route exact path='/newSearch' render={() => (
-						<NewSearch updateLastQuery={updateLastQuery.bind(this)} />
-					)} />
 
 					<Route path="*" component={NotFound} />
 

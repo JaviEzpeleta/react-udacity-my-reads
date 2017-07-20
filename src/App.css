@@ -167,6 +167,9 @@ button {
 	border: none;
 	outline: none;
 }
+.book-detail-bar input::-webkit-input-placeholder {
+	color: black;
+}
 .book-detail-left-area {
 	display: inline-block;
 	align-self: flex-start;
@@ -237,6 +240,7 @@ button {
 	background-repeat: no-repeat;
 	background-size: 28px;
 	font-size: 0;
+	cursor: pointer;
 }
 
 .search-books-results {

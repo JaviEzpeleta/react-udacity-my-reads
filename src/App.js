@@ -14,8 +14,7 @@ class BooksApp extends React.Component {
 	shelfNames = ['currentlyReading', 'wantToRead', 'read']
 
 	state = {
-		books: [],
-		lastQuery: ''
+		books: []
 	}
 
 	constructor(props) {

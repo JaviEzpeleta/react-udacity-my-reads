@@ -64,7 +64,7 @@ class SearchBooks extends Component {
 
 	render() {
 
-		const { changeSelectedBookshelf, books, urlQuery, updateLastQuery } = this.props;
+		const { changeSelectedBookshelf, books, lastQuery, updateLastQuery } = this.props;
 		const { isLoading, searchResults, query } = this.state;
 
 		return (
@@ -73,7 +73,7 @@ class SearchBooks extends Component {
 
 	        	{isLoading && ( <Loading/> )}
 
-	        	<SearchBar searchBooks={this.searchBooks} urlQuery={urlQuery} updateLastQuery={updateLastQuery} />
+	        	<SearchBar searchBooks={this.searchBooks} lastQuery={lastQuery} updateLastQuery={updateLastQuery} />
 
 				<div className="search-books-results">
 

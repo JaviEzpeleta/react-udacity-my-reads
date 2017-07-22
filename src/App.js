@@ -8,13 +8,15 @@ import SearchBooks from './components/SearchBooks'
 import MainPageTitle from './components/MainPageTitle'
 import NotFound from './components/NotFound'
 import BookDetail from './components/BookDetail'
+import NewSearch from './components/NewSearch'
 
 class BooksApp extends React.Component {
 
 	shelfNames = ['currentlyReading', 'wantToRead', 'read']
 
 	state = {
-		books: []
+		books: [],
+		lastQuery: (localStorage.lastQuery) ? localStorage.lastQuery : ''
 	}
 
 	constructor(props) {
@@ -24,6 +26,7 @@ class BooksApp extends React.Component {
 
 	updateLastQuery = (lastQuery) => {
 		this.setState({lastQuery: lastQuery})
+		localStorage.lastQuery = lastQuery
 	}
 
 	updateBooks() {
@@ -35,10 +38,6 @@ class BooksApp extends React.Component {
 
 	componentDidMount() {
 		this.updateBooks()
-	}
-
-	resetLastSearch() {
-		this.setState({lastQuery: ''})
 	}
 
 	changeSelectedBookshelf = (bookChanged) => {
@@ -105,7 +104,7 @@ class BooksApp extends React.Component {
 								books={books} />
 
 							<div className="open-search">
-								<Link to='/search' onClick={this.resetLastSearch}>
+								<Link to='/newSearch'>
 									Add a book
 								</Link>
 							</div>
@@ -113,6 +112,10 @@ class BooksApp extends React.Component {
 						</div>
 
 					)}/>
+
+					<Route exact path='/newSearch' render={() => (
+						<NewSearch updateLastQuery={updateLastQuery.bind(this)} />
+					)} />
 
 					<Route path="*" component={NotFound} />
 

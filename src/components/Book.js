@@ -29,7 +29,7 @@ class Book extends Component {
 			<li>
 				<div className="book">
 					<div className="book-top">
-						<Link to={`book/${book.id}`} className="book-cover" style={{backgroundImage: 'url('+image+')' }} />
+						<Link to={`/book/${book.id}`} className="book-cover" style={{backgroundImage: 'url('+image+')' }} />
 						<BookShelfChanger
 							book={book}
 							shelf={shelf}

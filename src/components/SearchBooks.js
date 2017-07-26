@@ -97,7 +97,7 @@ class SearchBooks extends Component {
 
 					<ol className="books-grid">
 						{ (searchResults.length > 0) && searchResults.map( (book, index) => (
-							<li>
+							<li key={book.id + index}>
 								<Book key={book.id + index}
 									book={book}
 									changeSelectedBookshelf={changeSelectedBookshelf}

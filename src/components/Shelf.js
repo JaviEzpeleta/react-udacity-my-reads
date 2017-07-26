@@ -35,11 +35,13 @@ class Shelf extends Component {
 						<ol className="books-grid">
 
 							{ books && books.filter((book) => (book.shelf === type)).map( (book) => (
-								<Book
-									key={book.id}
-									book={book}
-									changeSelectedBookshelf={changeSelectedBookshelf}
-									books={books} />
+								<li>
+									<Book
+										key={book.id}
+										book={book}
+										changeSelectedBookshelf={changeSelectedBookshelf}
+										books={books} />
+								</li>
 							)) }
 						</ol>
 					</span>

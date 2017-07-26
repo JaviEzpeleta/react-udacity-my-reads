@@ -97,10 +97,12 @@ class SearchBooks extends Component {
 
 					<ol className="books-grid">
 						{ (searchResults.length > 0) && searchResults.map( (book, index) => (
-							<Book key={book.id + index}
-								book={book}
-								changeSelectedBookshelf={changeSelectedBookshelf}
-								books={books} />
+							<li>
+								<Book key={book.id + index}
+									book={book}
+									changeSelectedBookshelf={changeSelectedBookshelf}
+									books={books} />
+							</li>
 						))}
 					</ol>
 				</div>

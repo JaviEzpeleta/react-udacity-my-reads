@@ -26,27 +26,25 @@ class Book extends Component {
 		image = image.replace("http://", "https://");
 
 		return (
-			<li>
-				<div className="book">
-					<div className="book-top">
-						<Link to={`/book/${book.id}`} className="book-cover" style={{backgroundImage: 'url('+image+')' }} />
-						<BookShelfChanger
-							book={book}
-							shelf={shelf}
-							changeSelectedBookshelf={changeSelectedBookshelf}
-							books={books} />
-					</div>
-					<div className="book-title">{title}</div>
-					<div className="book-authors">
-						{ authors && authors.map( (author, index) => (
-								<div key={index}>
-									{author}
-								</div>
-							)
-						) }
-					</div>
+			<div className="book">
+				<div className="book-top">
+					<Link to={`/book/${book.id}`} className="book-cover" style={{backgroundImage: 'url('+image+')' }} />
+					<BookShelfChanger
+						book={book}
+						shelf={shelf}
+						changeSelectedBookshelf={changeSelectedBookshelf}
+						books={books} />
 				</div>
-			</li>
+				<div className="book-title">{title}</div>
+				<div className="book-authors">
+					{ authors && authors.map( (author, index) => (
+							<div key={index}>
+								{author}
+							</div>
+						)
+					) }
+				</div>
+			</div>
 		)
 	}
 

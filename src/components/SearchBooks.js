@@ -27,7 +27,7 @@ class SearchBooks extends Component {
 		let searchResults = []
 		let myBookIds = books.map( (book) => (book.id) );
 		if (query.length) {
-			BooksAPI.search = BooksAPI.search.bind(this);
+			// BooksAPI.search = BooksAPI.search.bind(this);
 			BooksAPI.search(query, 20).then(results => {
 				if (results.length > 0) {
 					searchResults = results.map(result => {
@@ -37,14 +37,14 @@ class SearchBooks extends Component {
 				if (query === this.state.query) {
 					// only if the return for this query is the last promise being executed,
 					// then we update the search results in the state
-					if (this.shouldComponentUpdate) {
+					if (this.refs.searchBooks) {
 						this.setState({
 							searchResults: searchResults,
 						})
 						this.props.updateLastQuery(this.state.query)
 					}
 				}
-				if (this.state.mounted) this.hideLoading()
+				if (this.refs.searchBooks) this.hideLoading()
 			})
 		} else {
 			this.setState({searchResults: []})
@@ -65,17 +65,18 @@ class SearchBooks extends Component {
 		}
 	}
 
-	shouldComponentUpdate() {
-		if (this.state.mounted) return true
-		else return false
-	}
-
 	componentWillMount() {
 		this.loadSearchPage();
 		this.setState({mounted:  true});
 	}
+
 	componentWillUnmount() {
 		this.setState({mounted:  false});
+	}
+
+	componentWillReceiveProps() {
+		this.loadSearchPage();
+		this.setState({mounted:  true});
 	}
 
 	render() {
@@ -85,7 +86,7 @@ class SearchBooks extends Component {
 
 		return (
 
-			<div className="search-books">
+			<div className="search-books" ref="searchBooks">
 
 	        	{isLoading && ( <Loading/> )}
 

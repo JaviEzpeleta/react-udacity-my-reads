@@ -14,7 +14,8 @@ class SearchBooks extends Component {
 
 	state = {
 		searchResults: [],
-		query: ''
+		query: '',
+		mounted: false
 	}
 
 	searchBooks = (query) => {
@@ -36,10 +37,12 @@ class SearchBooks extends Component {
 				if (query === this.state.query) {
 					// only if the return for this query is the last promise being executed,
 					// then we update the search results in the state
-					this.setState({
-						searchResults: searchResults,
-					})
-					this.props.updateLastQuery(this.state.query)
+					if (this.state.mounted === true) {
+						this.setState({
+							searchResults: searchResults,
+						})
+						this.props.updateLastQuery(this.state.query)
+					}
 				}
 				this.hideLoading()
 			})
@@ -50,7 +53,7 @@ class SearchBooks extends Component {
 		}
 	}
 
-	componentDidMount() {
+	loadSearchPage() {
 		if (this.props.urlQuery) {
 			this.searchBooks(this.props.urlQuery)
 		} else {
@@ -60,6 +63,17 @@ class SearchBooks extends Component {
 				this.searchBooks(this.props.lastQuery)
 			}
 		}
+	}
+
+	componentDidMount() {
+		this.loadSearchPage();
+		this.setState({mounted:  true});
+	}
+	componentWillReceiveProps() {
+		this.loadSearchPage();
+	}
+	componentWillUnmount() {
+		this.setState({mounted:  false});
 	}
 
 	render() {
@@ -97,8 +111,8 @@ class SearchBooks extends Component {
 
 					<ol className="books-grid">
 						{ (searchResults.length > 0) && searchResults.map( (book, index) => (
-							<li key={book.id + index}>
-								<Book key={book.id + index}
+							<li key={book.id}>
+								<Book
 									book={book}
 									changeSelectedBookshelf={changeSelectedBookshelf}
 									books={books} />

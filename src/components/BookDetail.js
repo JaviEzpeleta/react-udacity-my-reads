@@ -35,7 +35,6 @@ class BookDetail extends Component {
 				this.setState({currentShelf: currentShelf})
 			}
 
-
 		})
 	}
 

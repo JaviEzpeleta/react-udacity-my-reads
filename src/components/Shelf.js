@@ -37,7 +37,6 @@ class Shelf extends Component {
 							{ books && books.filter((book) => (book.shelf === type)).map( (book) => (
 								<li key={book.id}>
 									<Book
-										key={book.id}
 										book={book}
 										changeSelectedBookshelf={changeSelectedBookshelf}
 										books={books} />
